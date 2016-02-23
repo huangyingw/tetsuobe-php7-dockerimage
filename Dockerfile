@@ -2,7 +2,7 @@ FROM php:7.0.2-fpm
 
 RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup | bash -
-RUN apt-get install -y git libssl-dev zlib1g-dev libicu-dev g++
+RUN apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++
 
 # Install PHP extensions
 #RUN pecl install xdebug

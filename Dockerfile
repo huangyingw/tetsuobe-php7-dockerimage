@@ -1,12 +1,12 @@
-FROM php:7.0.2-fpm
+FROM php:7.0.4-fpm
 
 RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++
 
 # Install PHP extensions
-#RUN pecl install xdebug
-#RUN echo zend_extension=xdebug.so > /usr/local/etc/php/conf.d/xdebug.ini
+RUN pecl install xdebug
+RUN echo zend_extension=xdebug.so > /usr/local/etc/php/conf.d/xdebug.ini
 RUN pecl install apcu
 RUN echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 RUN docker-php-ext-install zip mbstring intl

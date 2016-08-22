@@ -1,7 +1,7 @@
 FROM php:7.0.10-fpm
 
 RUN apt-get update
-RUN apt-get install -y git
+RUN apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++
 
 # Install PHP extensions
 RUN pecl install xdebug

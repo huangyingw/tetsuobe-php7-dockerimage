@@ -1,4 +1,4 @@
-FROM php:7.0.10-fpm
+FROM php:7.0.12-fpm
 
 RUN apt-get update
 RUN apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++

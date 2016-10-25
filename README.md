@@ -2,4 +2,4 @@
 
 Can be found on Docker Hub [tetsuobe/php7](https://hub.docker.com/r/tetsuobe/php7/)
 
-PHP-fpm 7.0.10
+PHP-fpm 7.0.12

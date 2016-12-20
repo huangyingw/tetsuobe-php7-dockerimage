@@ -1,14 +1,19 @@
-FROM php:7.0.12-fpm
+FROM php:7.1.0-fpm
 
-RUN apt-get update
-RUN apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++
+RUN apt-get update && \
+	apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++ && \
+    apt-get autoclean -y && \
+    apt-get clean -y
 
 # Install PHP extensions
-RUN pecl install xdebug
-RUN echo zend_extension=xdebug.so > /usr/local/etc/php/conf.d/xdebug.ini
-RUN pecl install apcu
-RUN echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
-RUN docker-php-ext-install zip mbstring intl
+RUN pecl install xdebug && \
+	echo zend_extension=xdebug.so > /usr/local/etc/php/conf.d/xdebug.ini && \
+	pecl install apcu && \
+	echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
+    pecl install uuid && \
+    echo extension=uuid.so > /usr/local/etc/php/conf.d/uuid.ini && \
+	docker-php-ext-install zip mbstring intl bcmath && \
+    echo extension=bcmath.so > /usr/local/etc/php/conf.d/docker-php-ext-bcmath.ini
 
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer

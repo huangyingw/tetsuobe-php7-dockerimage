@@ -1,19 +1,21 @@
-FROM php:7.1.4-fpm
+FROM php:7.1-fpm-alpine
 
-RUN apt-get update && \
-	apt-get install -y git wget libssl-dev zlib1g-dev libicu-dev g++ uuid-dev && \
-    apt-get autoclean -y && \
-    apt-get clean -y
+ENV BUILD_DEPS \
+                zlib-dev \
+                icu-dev \
+                util-linux-dev \
+                autoconf \
+                g++ \
+                gcc \
+                make \
+                pcre-dev
 
-# Install PHP extensions
-RUN pecl install xdebug && \
-	echo zend_extension=xdebug.so > /usr/local/etc/php/conf.d/xdebug.ini && \
-	pecl install apcu && \
-	echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini && \
-    pecl install uuid && \
-    echo extension=uuid.so > /usr/local/etc/php/conf.d/uuid.ini && \
-	docker-php-ext-install zip mbstring intl bcmath && \
-    echo extension=bcmath.so > /usr/local/etc/php/conf.d/docker-php-ext-bcmath.ini
-
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/bin/composer
+RUN apk update && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
+    && apk add bash icu-libs util-linux \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
+    && docker-php-ext-install zip mbstring intl opcache bcmath \
+    && pecl install xdebug \
+    && pecl install apcu \
+    && pecl install uuid \
+    && docker-php-ext-enable xdebug apcu uuid
+RUN apk del .build-deps $BUILD_DEPS

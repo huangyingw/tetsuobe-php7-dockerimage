@@ -17,5 +17,6 @@ RUN apk update && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && pecl install xdebug \
     && pecl install apcu \
     && pecl install uuid \
-    && docker-php-ext-enable xdebug apcu uuid
-RUN apk del .build-deps $BUILD_DEPS
+    && docker-php-ext-enable xdebug apcu uuid \
+    && apk del .build-deps \
+    && rm -rf /tmp/pear

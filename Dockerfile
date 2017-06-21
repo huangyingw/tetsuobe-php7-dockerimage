@@ -14,9 +14,9 @@ RUN apk update && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && apk add bash icu-libs util-linux \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
     && docker-php-ext-install zip mbstring intl opcache bcmath \
-    && pecl install xdebug \
-    && pecl install apcu \
-    && pecl install uuid \
+    && pecl install -o xdebug \
+    && pecl install -o apcu \
+    && pecl install -o uuid \
     && docker-php-ext-enable xdebug apcu uuid \
     && apk del .build-deps \
     && rm -rf /tmp/pear

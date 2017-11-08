@@ -1,3 +1,4 @@
+FROM composer:latest
 FROM php:7.1-fpm-alpine
 
 ENV BUILD_DEPS \
@@ -12,7 +13,6 @@ ENV BUILD_DEPS \
 
 RUN apk update && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && apk add bash icu-libs util-linux \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
     && docker-php-ext-install zip mbstring intl opcache bcmath \
     && pecl install -o xdebug \
     && pecl install -o apcu \

@@ -1,4 +1,3 @@
-FROM composer:latest
 FROM php:7.1-fpm-alpine
 
 ENV BUILD_DEPS \
@@ -20,3 +19,7 @@ RUN apk update && apk add --no-cache --virtual .build-deps $BUILD_DEPS \
     && docker-php-ext-enable xdebug apcu uuid \
     && apk del .build-deps \
     && rm -rf /tmp/pear
+
+
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/bin/composer
